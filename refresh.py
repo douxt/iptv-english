@@ -19,6 +19,7 @@ import socket
 import sys
 import urllib.error
 import urllib.request
+from urllib.parse import urljoin
 
 if sys.stdout.encoding and sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -123,15 +124,60 @@ def parse(text):
     return out
 
 
+def _get(url, timeout=TIMEOUT):
+    req = urllib.request.Request(url, headers={"User-Agent": UA}, method="GET")
+    with urllib.request.urlopen(req, timeout=timeout) as r:
+        return r.read()
+
+
 def probe(url):
+    """两段验证：① 清单能解析成 HLS ② 首个分片能真正拉到。
+
+    只看清单的 HTTP 状态码会大量误判 —— 实测存在两类假健康：
+      · 锁区：服务器回 200 + "not available in your area" 纯文本
+      · 僵尸流：清单照常滚动，但分片全部 404
+    两者都返回 200，必须下到分片才算数。
+    返回 (是否健康, 失败原因)。
+    """
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": UA}, method="GET")
-        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
-            return r.status
+        body = _get(url).decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
-        return e.code
+        return False, f"http{e.code}"
     except Exception:
-        return 0
+        return False, "unreachable"
+
+    if "#EXTM3U" not in body:
+        return False, "not-hls"
+
+    base = url
+    lines = [l.strip() for l in body.splitlines() if l.strip() and not l.startswith("#")]
+
+    # 主清单 → 下探一层拿变体清单。必须用 urljoin 按 RFC 3986 解析：
+    # 手写 base+"/"+v 在变体行是绝对路径（/a/b.m3u8）时会拼成双前缀，导致 414/404 误杀
+    if "#EXT-X-STREAM-INF" in body:
+        if not lines:
+            return False, "empty-master"
+        vurl = urljoin(base, lines[0])
+        try:
+            body = _get(vurl).decode("utf-8", "replace")
+        except urllib.error.HTTPError as e:
+            return False, f"variant{e.code}"
+        except Exception:
+            return False, "variant-unreachable"
+        base = vurl
+        lines = [l.strip() for l in body.splitlines() if l.strip() and not l.startswith("#")]
+
+    if not lines:
+        return False, "no-segment"
+    seg = urljoin(base, lines[0])
+    try:
+        if not _get(seg):
+            return False, "empty-segment"
+    except urllib.error.HTTPError as e:
+        return False, f"seg{e.code}"
+    except Exception:
+        return False, "seg-unreachable"
+    return True, ""
 
 
 def host_of(url):
@@ -210,17 +256,31 @@ def run_lang(cfg, do_probe):
     print(f"  候选 {len(cands)}")
 
     if do_probe:
-        print(f"  探活 {len(cands)}（并发 {WORKERS}）...")
+        print(f"  探活 {len(cands)}（并发 {WORKERS}，含分片验证）...")
         urls = [u for _, _, u in cands]
         with cf.ThreadPoolExecutor(max_workers=WORKERS) as ex:
             status = dict(zip(urls, ex.map(probe, urls)))
+        bad = {}
+        for ok, reason in status.values():
+            if not ok:
+                bad[reason] = bad.get(reason, 0) + 1
+        print(f"  探活通过 {sum(1 for ok, _ in status.values() if ok)}/{len(cands)}  失败明细 {bad}")
     else:
-        status = {u: 200 for _, _, u in cands}
+        status = {u: (True, "") for _, _, u in cands}
+
+    # 大陆源站的豁免名单：探测点（CI 在美国）无权判定大陆源站死活
+    cn = cn_hosts([u for _, _, u in clean]) if cfg.get("direct") else None
 
     t1, t2, t3 = cfg["tiers"]
-    scored = []
+    scored, exempted = [], 0
     for ext, ch, url in cands:
-        if status.get(url, 0) not in (200, 206, 204):
+        ok, reason = status.get(url, (False, "missing"))
+        # 远端探活无权否决大陆源站：网络不可达 / 分片拉不动，在探测点之外
+        # 并不代表源已死（CI 跑在美国，大陆源多只对国内可达）
+        if not ok and cn and host_of(url) in cn and (
+                reason == "unreachable" or reason.startswith(("seg", "http5"))):
+            ok, exempted = True, exempted + 1
+        if not ok:
             continue
         fame = 40 if t1.search(ch) else 32 if t2.search(ch) else 22 if t3.search(ch) else 12
         fast = 8 if FAST.search(url) else 0
@@ -252,10 +312,9 @@ def run_lang(cfg, do_probe):
     write("essentials", essentials)
 
     if cfg.get("direct"):
-        ds = cn_hosts([u for _, _, u in clean])
-        if ds:
-            hits = [(e, c, u) for e, c, u in clean if host_of(u) in ds]
-            print(f"  源站在中国大陆（走直连）: {len(hits)}")
+        if cn:
+            hits = [(e, c, u) for _s, e, c, u in scored if host_of(u) in cn]
+            print(f"  源站在中国大陆（走直连）: {len(hits)}   探活豁免: {exempted}")
             write("direct", hits)
 
 
