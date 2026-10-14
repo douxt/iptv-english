@@ -12,8 +12,10 @@
 import argparse
 import concurrent.futures as cf
 import io
+import json
 import os
 import re
+import socket
 import sys
 import urllib.error
 import urllib.request
@@ -70,10 +72,13 @@ TIER_ZH = (
 FAST = re.compile(r"(?i)tubi|samsung|pluto|plex|roku|stirr|xumo|rakuten|wurl\.tv|akamaized|cloudfront")
 
 LANGS = [
-    {"name": "english", "code": "eng", "brand": BRAND_EN, "tiers": TIER_EN},
+    {"name": "english", "code": "eng", "brand": BRAND_EN, "tiers": TIER_EN, "direct": False},
     # brand=None 表示不做白名单筛选，全部参与
-    {"name": "chinese", "code": "zho", "brand": None, "tiers": TIER_ZH},
+    # direct=True 额外产出一份「源站在中国大陆 → 走直连」的子集
+    {"name": "chinese", "code": "zho", "brand": None, "tiers": TIER_ZH, "direct": True},
 ]
+
+GEO_API = "http://ip-api.com/batch?fields=query,countryCode"
 
 # 归并同类噪声家族（先剥画质后缀再匹配）
 FAMILIES = [
@@ -127,6 +132,40 @@ def probe(url):
         return e.code
     except Exception:
         return 0
+
+
+def host_of(url):
+    m = re.match(r"^https?://([^/:]+)", url)
+    return m.group(1) if m else ""
+
+
+def cn_hosts(urls):
+    """返回「解析到中国大陆 IP」的主机名集合。失败时返回 None（不阻断主流程）。"""
+    hosts = sorted({h for h in map(host_of, urls) if h})
+
+    def one(h):
+        try:
+            return h, sorted({ai[4][0] for ai in socket.getaddrinfo(h, None)})
+        except Exception:
+            return h, []
+
+    try:
+        with cf.ThreadPoolExecutor(max_workers=16) as ex:
+            resolved = dict(ex.map(one, hosts))
+        ips = sorted({ip for lst in resolved.values() for ip in lst})
+        geo = {}
+        for i in range(0, len(ips), 100):
+            req = urllib.request.Request(
+                GEO_API, data=json.dumps(ips[i:i + 100]).encode(),
+                headers={"Content-Type": "application/json"})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                for item in json.load(r):
+                    geo[item.get("query")] = item.get("countryCode")
+        return {h for h, lst in resolved.items()
+                if any(geo.get(ip) == "CN" for ip in lst)}
+    except Exception as e:
+        print(f"  [warn] 直连检测失败，跳过: {e}")
+        return None
 
 
 def strip_quality(name):
@@ -211,6 +250,13 @@ def run_lang(cfg, do_probe):
     write("clean", clean)
     write("top", [(e, c, u) for _s, e, c, u in scored])
     write("essentials", essentials)
+
+    if cfg.get("direct"):
+        ds = cn_hosts([u for _, _, u in clean])
+        if ds:
+            hits = [(e, c, u) for e, c, u in clean if host_of(u) in ds]
+            print(f"  源站在中国大陆（走直连）: {len(hits)}")
+            write("direct", hits)
 
 
 def main():

@@ -20,13 +20,23 @@
 
 | 文件 | 频道数 | 说明 |
 |---|---|---|
-| [`chinese-essentials.m3u`](chinese-essentials.m3u) | ~72 | **推荐**。同频道不同画质只留一条 |
-| [`chinese-top.m3u`](chinese-top.m3u) | ~75 | 探活通过的全部频道 |
-| [`chinese-clean.m3u`](chinese-clean.m3u) | ~136 | 剔除锁区/非全天/宗教/购物 |
+| [`chinese-direct.m3u`](chinese-direct.m3u) | ~59 | **源站在中国大陆，走直连**。国内网络下最快 |
+| [`chinese-essentials.m3u`](chinese-essentials.m3u) | ~66 | 同频道不同画质只留一条 |
+| [`chinese-top.m3u`](chinese-top.m3u) | ~69 | 探活通过的全部频道 |
+| [`chinese-clean.m3u`](chinese-clean.m3u) | ~129 | 剔除锁区/非全天/宗教/购物 |
 | [`chinese-all.m3u`](chinese-all.m3u) | ~216 | iptv-org 中文表原样 |
 
 中文表频道数少，不做品牌白名单，全量参与探活。内容以 CCTV 全套、香港（Jade / KIX / 美亚）、
 台湾（TVBS-Asia）、新加坡（8 频道 / meWATCH）及各省市台为主。
+
+**关于速度** —— 决定走直连还是走代理的是**源站 IP 归属**（OpenClash 的 `GEOIP,CN,DIRECT`）：
+
+- `chinese-direct.m3u` 的源站解析到中国大陆 IP，**走直连**，通常最快。
+- 其余中文源相当一部分托管在境外，**要走代理**。若多个频道挤在同一个低端 VPS 上，
+  带宽会被摊薄 —— CCTV 主力（12 个台同一 IP）与 CCTV-Storm 系列（11 个台同一 IP）即属此类。
+  遇到卡顿优先切 `direct` 列表。
+- 卡顿的根因通常是**源站质量**而非代理本身：同为走代理，落在 Akamai / CloudFront 上的
+  英语台明显比落在小型 VPS 上的中文台稳。
 
 ### 在线地址
 
@@ -34,6 +44,7 @@
 
 ```
 https://raw.githubusercontent.com/douxt/iptv-english/main/english-essentials.m3u
+https://raw.githubusercontent.com/douxt/iptv-english/main/chinese-direct.m3u
 https://raw.githubusercontent.com/douxt/iptv-english/main/chinese-essentials.m3u
 ```
 
