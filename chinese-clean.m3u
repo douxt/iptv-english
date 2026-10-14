@@ -123,8 +123,6 @@ https://stream.sun0769.com/dgrtv1/mp4tv1_800/index.m3u8
 https://restream.pdtvhd.com/memfs/0b1b95c9-3543-4af9-9fdb-cf45f1602f17.m3u8
 #EXTINF:-1 tvg-id="FujianComprehensiveChannel.cn@SD" tvg-logo="https://i.imgur.com/rePTGa6.png" group-title="General",Fujian Comprehensive Channel
 http://120.39.52.202:5140/%E7%A6%8F%E5%BB%BA%E7%BB%BC%E5%90%88
-#EXTINF:-1 tvg-id="GodStandsKidsClubTV.pk@Chinese" tvg-logo="https://i.imgur.com/FxDBbpz.jpeg" group-title="Kids;Religious",God Stands Kids Club TV Chinese
-https://online.godstands.tv:5443/WebRTCApp/streams/KidsChinese.m3u8
 #EXTINF:-1 tvg-id="GoldenEagleCartoon.cn@SD" tvg-logo="https://i.imgur.com/xfVHrKQ.png" group-title="Animation;Kids",Golden Eagle Cartoon (576p)
 http://223.110.245.145/ott.js.chinamobile.com/PLTV/3/224/3221226303/index.m3u8
 #EXTINF:-1 tvg-id="GuangdongTVAmerica.us@SD" tvg-logo="https://i.imgur.com/7J4qGjA.png" group-title="General",Guangdong TV America
@@ -209,18 +207,6 @@ https://play-live-hls.jxtvcn.com.cn/live-city/tv_nanchang.m3u8
 http://1.24.190.98:10080/hls/40/index.m3u8
 #EXTINF:-1 tvg-id="NingxiaSatelliteChannel.cn@SD" tvg-logo="https://i.imgur.com/nUQE4Ib.png" group-title="Entertainment",Ningxia Satellite Channel (576p)
 http://39.134.115.163:8080/PLTV/88888910/224/3221225726/index.m3u8
-#EXTINF:-1 tvg-id="NTDTV.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/NTD_Logo_with_symbol.svg/960px-NTD_Logo_with_symbol.svg.png" group-title="General",NTD TV (1080p)
-https://ntd02.akamaized.net/HD-NY/index.m3u8
-#EXTINF:-1 tvg-id="NTDTV.us@West" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/NTD_Logo_with_symbol.svg/960px-NTD_Logo_with_symbol.svg.png" group-title="General",NTD TV West (720p)
-https://ntd02.akamaized.net/HD-LA/index.m3u8
-#EXTINF:-1 tvg-id="NTDTVAsiaPacific.us@SD" tvg-logo="https://i.imgur.com/iyFXcDy.png" group-title="General",NTD TV Asia-Pacific
-https://live.ntdtv.com/aplive200/playlist.m3u8
-#EXTINF:-1 tvg-id="NTDTVCanada.us@East" tvg-logo="https://i.imgur.com/iyFXcDy.png" group-title="General",NTD TV Canada
-https://live.ntdtv.com/mllive860/playlist.m3u8
-#EXTINF:-1 tvg-id="NTDTVCanada.us@West" tvg-logo="https://i.imgur.com/iyFXcDy.png" group-title="General",NTD TV Canada West
-https://live.ntdtv.com/cwlive220/playlist.m3u8
-#EXTINF:-1 tvg-id="NTDTVChina.us@SD" tvg-logo="https://i.imgur.com/OpWTWdh.png" group-title="General",NTD TV China
-https://live.ntdtv.com/cnlive900/playlist.m3u8
 #EXTINF:-1 tvg-id="PhoenixChineseChannel.hk@SD" tvg-logo="https://raw.githubusercontent.com/wanglindl/TVlogo/main/img/Phoenix1.png" group-title="General",Phoenix Chinese Channel (720p)
 http://223.110.245.139/ott.js.chinamobile.com/PLTV/3/224/3221226922/index.m3u8
 #EXTINF:-1 tvg-id="PhoenixInfoNewsChannel.hk@SD" tvg-logo="https://i.imgur.com/mt4h3VO.png" group-title="News",Phoenix InfoNews Channel (720p)

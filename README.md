@@ -13,7 +13,7 @@
 |---|---|---|
 | [`english-essentials.m3u`](english-essentials.m3u) | ~236 | **推荐**。每个品牌只保留一条，全部经过探活 |
 | [`english-top.m3u`](english-top.m3u) | ~373 | 探活通过的全部频道，按综合分数排序 |
-| [`english-clean.m3u`](english-clean.m3u) | ~2188 | 剔除锁区/非全天/宗教/议会/购物 |
+| [`english-clean.m3u`](english-clean.m3u) | ~2188 | 剔除锁区/非全天/宗教/议会/购物/自定屏蔽名单 |
 | [`english-all.m3u`](english-all.m3u) | ~2993 | iptv-org 英语表原样 |
 
 ### 中文（`zho`）

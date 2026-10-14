@@ -27,7 +27,11 @@ UA = "VLC/3.0.20 LibVLC/3.0.20"
 TIMEOUT = 10
 WORKERS = 24
 
-DROP_GROUPS = {"Religious", "Legislative", "Undefined", "Shopping", "Shop"}
+# 命中任一分组即剔除（group-title 可能是 "Kids;Religious" 这种多标签）
+DROP_GROUPS = ["Religious", "Legislative", "Undefined", "Shopping", "Shop"]
+
+# 屏蔽名单：命中 EXTINF 行（含 tvg-id）或频道名即剔除
+BLOCK = re.compile(r"(?i)NTDTV|新唐人|New\s*Tang\s*Dynasty")
 
 # ---------------------------------------------------------------- 语言配置
 
@@ -150,9 +154,12 @@ def run_lang(cfg, do_probe):
     clean, dropped = [], {}
     for ext, ch, url in items:
         grp = (re.search(r'group-title="([^"]*)"', ext) or [None, ""])[1]
+        parts = {p.strip() for p in grp.split(";") if p.strip()}
+        hit = next((d for d in DROP_GROUPS if d in parts), None)
         reason = ("geo" if "Geo-blocked" in ch else
                   "not24" if "Not 24/7" in ch else
-                  grp.split(";")[0] if grp.split(";")[0] in DROP_GROUPS else None)
+                  "block" if BLOCK.search(ext) else
+                  hit)
         if reason:
             dropped[reason] = dropped.get(reason, 0) + 1
         else:
