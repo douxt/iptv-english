@@ -321,10 +321,18 @@ def run_lang(cfg, do_probe):
     return {"name": name, "essentials": essentials, "direct": hits}
 
 
-def set_group(ext, group):
-    if 'group-title="' in ext:
-        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', ext)
-    return re.sub(r"^#EXTINF:[^,]*", lambda m: f'{m.group(0)} group-title="{group}"', ext, count=1)
+def prefix_group(ext, prefix):
+    """给现有 group-title 加来源前缀，保留原分类。
+
+    直接覆盖会让所有频道落进一个大组（News/Movies/Sports 的分类粒度全丢），
+    所以这里只加前缀：'News' + 'EN' → 'EN·News'。
+    """
+    m = re.search(r'group-title="([^"]*)"', ext)
+    old = m.group(1).split(";")[0].strip() if m else ""
+    new = f"{prefix}·{old}" if old else prefix
+    if m:
+        return re.sub(r'group-title="[^"]*"', f'group-title="{new}"', ext, count=1)
+    return re.sub(r"^#EXTINF:[^,]*", lambda mm: f'{mm.group(0)} group-title="{new}"', ext, count=1)
 
 
 def write_combined(results):
@@ -335,9 +343,10 @@ def write_combined(results):
     英文表与中文表里，不处理会重复出现。
     """
     order = {"chinese": 0, "english": 1}
+    prefixes = {"chinese": "CN", "english": "EN"}
     seen, groups = set(), []
 
-    def add(gname, ents):
+    def add(prefix, ents):
         kept = []
         for e, c, u in ents:
             tid = (re.search(r'tvg-id="([^"]*)"', e) or [None, c])[1]
@@ -346,25 +355,29 @@ def write_combined(results):
             seen.add(tid)
             kept.append((e, u))
         if kept:
-            groups.append((gname, kept))
+            groups.append((prefix, kept))
 
     for r in sorted(results, key=lambda r: order.get(r["name"], 9)):
+        p = prefixes.get(r["name"], r["name"].upper())
         dd = {c for _, c, _ in r["direct"]}
         if r["direct"]:
-            add("中文·直连" if r["name"] == "chinese" else f"{r['name']}·direct", r["direct"])
-        add("中文·精选" if r["name"] == "chinese" else "English",
-            [(e, c, u) for e, c, u in r["essentials"] if c not in dd])
+            add(f"{p}直连", r["direct"])
+        add(p, [(e, c, u) for e, c, u in r["essentials"] if c not in dd])
 
     fn = "all-in-one.m3u"
-    total = 0
+    total, hist = 0, {}
     with io.open(os.path.join(HERE, fn), "w", encoding="utf-8") as f:
         f.write("#EXTM3U\n")
-        for gname, ents in groups:
+        for prefix, ents in groups:
             for e, u in ents:
-                f.write(set_group(e, gname) + "\n" + u + "\n")
+                line = prefix_group(e, prefix)
+                f.write(line + "\n" + u + "\n")
+                g = re.search(r'group-title="([^"]*)"', line).group(1)
+                hist[g] = hist.get(g, 0) + 1
             total += len(ents)
-            print(f"  [{gname}] {len(ents)}")
-    print(f"  {fn:<28} {total}（合并，无重复）")
+    print(f"  {fn:<28} {total}（合并，无重复，分类保留）")
+    for g, n in sorted(hist.items(), key=lambda x: (-x[1], x[0])):
+        print(f"      {g:<20} {n}")
 
 
 def main():
