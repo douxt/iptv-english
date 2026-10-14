@@ -67,7 +67,7 @@ https://cdn.jsdelivr.net/gh/douxt/iptv-english@main/english-essentials.m3u
 
 ## 用法
 
-**Kodi** — 安装 `PVR IPTV Simple Client`，M3U 地址填上面的 CDN 链接。
+**Kodi** — 安装 `PVR IPTV Simple Client`，M3U 地址填上面的 raw 链接。
 
 **SrcBox / VLC / mpv / TiviMate / IPTV Smarters** — 直接粘贴同一个 URL。
 
