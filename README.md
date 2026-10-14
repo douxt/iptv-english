@@ -38,11 +38,17 @@
 - 卡顿的根因通常是**源站质量**而非代理本身：同为走代理，落在 Akamai / CloudFront 上的
   英语台明显比落在小型 VPS 上的中文台稳。
 
+### 合并列表（推荐，Kodi 只支持一个地址时用）
+
+[`all-in-one.m3u`](all-in-one.m3u) 把中文直连、中文精选、英文精选合成一个文件，按 `group-title` 分三组：
+`中文·直连` → `中文·精选` → `English`。跨语言按 tvg-id 去重（CGTN 等台同时收录在两表里）。
+
 ### 在线地址
 
 **主用 `raw`**（永远最新，无缓存）：
 
 ```
+https://raw.githubusercontent.com/douxt/iptv-english/main/all-in-one.m3u
 https://raw.githubusercontent.com/douxt/iptv-english/main/english-essentials.m3u
 https://raw.githubusercontent.com/douxt/iptv-english/main/chinese-direct.m3u
 https://raw.githubusercontent.com/douxt/iptv-english/main/chinese-essentials.m3u

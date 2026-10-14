@@ -311,11 +311,60 @@ def run_lang(cfg, do_probe):
     write("top", [(e, c, u) for _s, e, c, u in scored])
     write("essentials", essentials)
 
+    hits = []
     if cfg.get("direct"):
         if cn:
             hits = [(e, c, u) for _s, e, c, u in scored if host_of(u) in cn]
             print(f"  源站在中国大陆（走直连）: {len(hits)}   探活豁免: {exempted}")
             write("direct", hits)
+
+    return {"name": name, "essentials": essentials, "direct": hits}
+
+
+def set_group(ext, group):
+    if 'group-title="' in ext:
+        return re.sub(r'group-title="[^"]*"', f'group-title="{group}"', ext)
+    return re.sub(r"^#EXTINF:[^,]*", lambda m: f'{m.group(0)} group-title="{group}"', ext, count=1)
+
+
+def write_combined(results):
+    """合并各语言精选为单文件，供只支持一个地址的播放器（如 Kodi）使用。
+
+    中文在前；直连单列一组并优先展示，已在直连组出现的不再进「精选」组。
+    跨语言按 tvg-id 去重 —— 个别台（如 CGTN）同时收录在 iptv-org 的
+    英文表与中文表里，不处理会重复出现。
+    """
+    order = {"chinese": 0, "english": 1}
+    seen, groups = set(), []
+
+    def add(gname, ents):
+        kept = []
+        for e, c, u in ents:
+            tid = (re.search(r'tvg-id="([^"]*)"', e) or [None, c])[1]
+            if tid in seen:
+                continue
+            seen.add(tid)
+            kept.append((e, u))
+        if kept:
+            groups.append((gname, kept))
+
+    for r in sorted(results, key=lambda r: order.get(r["name"], 9)):
+        dd = {c for _, c, _ in r["direct"]}
+        if r["direct"]:
+            add("中文·直连" if r["name"] == "chinese" else f"{r['name']}·direct", r["direct"])
+        add("中文·精选" if r["name"] == "chinese" else "English",
+            [(e, c, u) for e, c, u in r["essentials"] if c not in dd])
+
+    fn = "all-in-one.m3u"
+    total = 0
+    with io.open(os.path.join(HERE, fn), "w", encoding="utf-8") as f:
+        f.write("#EXTM3U\n")
+        for gname, ents in groups:
+            for e, u in ents:
+                f.write(set_group(e, gname) + "\n" + u + "\n")
+            total += len(ents)
+            print(f"  [{gname}] {len(ents)}")
+    print(f"  {fn:<28} {total}（合并，无重复）")
 
 
 def main():
@@ -324,10 +373,16 @@ def main():
     ap.add_argument("--lang", help="只跑指定语言（english / chinese）")
     args = ap.parse_args()
 
+    results = []
     for cfg in LANGS:
         if args.lang and cfg["name"] != args.lang:
             continue
-        run_lang(cfg, do_probe=not args.no_probe)
+        results.append(run_lang(cfg, do_probe=not args.no_probe))
+
+    if len(results) > 1:
+        print("\n=== all-in-one ===")
+        write_combined(results)
+
     print(f"\n完成 → {HERE}")
 
 
