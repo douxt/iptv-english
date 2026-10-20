@@ -87,6 +87,37 @@ python refresh.py --lang chinese  # 只跑中文
 
 纯标准库，无第三方依赖。
 
+## 定时刷新（自建环境）
+
+**探活必须在播放端的网络路径上执行。** GitHub Actions 跑在美国，探的是
+「美国 → 源站」，与家里播放时的路径不一致，会大面积误判 —— 所以 CI 已降级为
+手动冒烟测试，不再写回仓库。
+
+推荐跑在 NAS（Docker）或网关上，流量自然经过网关的代理分流，与播放端一致。
+
+```bash
+# 1. 创建 .env，填入 GitHub fine-grained PAT（Contents: Read and write）
+echo 'GIT_TOKEN=github_pat_xxx' > .env
+
+# 2. 启动（首次会 clone 仓库到 ./data/repo，之后每 INTERVAL 秒刷新一次）
+docker compose up -d --build
+
+# 3. 看日志
+docker compose logs -f
+```
+
+| 环境变量 | 默认 | 说明 |
+|---|---|---|
+| `GIT_TOKEN` | 必填 | GitHub PAT，需要 Contents 读写权限 |
+| `GIT_REMOTE` | `github.com/douxt/iptv-english.git` | 目标仓库 |
+| `INTERVAL` | `86400` | 刷新间隔（秒） |
+| `TZ` | `Asia/Shanghai` | 容器时区 |
+
+`.env` 与 `data/` 已在 `.gitignore` 中，不会误提交。
+
+> 没有 Docker 也可直接用宿主 cron：
+> `0 11 * * * cd /path/to/repo && python refresh.py && git add -A && git commit -m "chore: refresh $(date +\%F)" && git push`
+
 ## 已知限制
 
 - **探活在 GitHub Actions 上执行，测的是美国到源站的网络路径**，不是你的本地路径。

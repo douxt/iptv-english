@@ -1,0 +1,15 @@
+services:
+  iptv-refresh:
+    build: .
+    container_name: iptv-refresh
+    restart: unless-stopped
+    environment:
+      # 在宿主目录建 .env，写入 GIT_TOKEN=ghp_xxx（不要提交进仓库）
+      GIT_TOKEN: ${GIT_TOKEN:?请在同目录 .env 中设置 GIT_TOKEN}
+      GIT_REMOTE: ${GIT_REMOTE:-github.com/douxt/iptv-english.git}
+      INTERVAL: ${INTERVAL:-86400}
+      TZ: ${TZ:-Asia/Shanghai}
+    volumes:
+      - ./data:/data
+    # 探活只需出站，不需要暴露端口
+    network_mode: bridge

@@ -1,24 +1,17 @@
-name: refresh playlists
+name: smoke test
+
+# 定时刷新已迁到自建环境（NAS / 网关），因为探活必须走用户自己的网络路径。
+# GitHub Actions 跑在美国，探的是「美国 → 源站」，与播放端路径不一致，
+# 会大量误判。这里只保留一个手动触发的冒烟测试，不写回仓库。
 
 on:
-  schedule:
-    # 每天 03:17 UTC（北京 11:17）。避开整点，GitHub cron 高峰会延迟。
-    - cron: "17 3 * * *"
   workflow_dispatch:
-  push:
-    paths:
-      - refresh.py
-      - .github/workflows/refresh.yml
 
 permissions:
-  contents: write
-
-concurrency:
-  group: refresh
-  cancel-in-progress: false
+  contents: read
 
 jobs:
-  refresh:
+  smoke:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -27,21 +20,11 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Refresh playlists
-        run: python refresh.py
-
-      - name: Touch heartbeat
-        # 仓库 60 天无活动会停掉 schedule；这个文件保证每天都有一次提交。
-        run: date -u +'%Y-%m-%dT%H:%M:%SZ' > .last-refresh
-
-      - name: Commit
+      - name: 语法与拉取检查（不探活、不提交）
         run: |
-          git config user.name  "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          if git diff --cached --quiet; then
-            echo "no changes"
-          else
-            git commit -m "chore: refresh $(date -u +%F)"
-            git push
-          fi
+          python -m py_compile refresh.py
+          python refresh.py --no-probe
+          echo "--- 产物（仅本 runner 内，不回写）---"
+          for f in *.m3u; do
+            printf "%-28s %s\n" "$f" "$(grep -c '^#EXTINF' "$f")"
+          done
