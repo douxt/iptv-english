@@ -4,6 +4,9 @@ set -eu
 : "${GIT_TOKEN:?需要设置 GIT_TOKEN（GitHub fine-grained PAT，Contents: Read and write）}"
 GIT_REMOTE="${GIT_REMOTE:-github.com/douxt/iptv-english.git}"
 INTERVAL="${INTERVAL:-86400}"
+
+# 走网关 OpenClash 的 HTTP 代理（可选）
+export IPTV_PROXY="${IPTV_PROXY:-}"
 REPO=/data/repo
 
 if [ ! -d "$REPO/.git" ]; then

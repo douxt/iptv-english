@@ -110,8 +110,24 @@ docker compose logs -f
 |---|---|---|
 | `GIT_TOKEN` | 必填 | GitHub PAT，需要 Contents 读写权限 |
 | `GIT_REMOTE` | `github.com/douxt/iptv-english.git` | 目标仓库 |
+| `IPTV_PROXY` | 空 | HTTP 代理，如 `http://user:pass@192.168.31.1:7890` |
 | `INTERVAL` | `86400` | 刷新间隔（秒） |
 | `TZ` | `Asia/Shanghai` | 容器时区 |
+
+### 走网关代理
+
+若运行环境本身不能直连境外（例如 NAS 未被 OpenClash 透明代理覆盖），
+把 `IPTV_PROXY` 指向网关 Clash 的 **HTTP 端口**，探活与抓取都会经过它：
+
+```bash
+# .env
+IPTV_PROXY=http://用户名:密码@192.168.31.1:7890
+```
+
+- 用 **HTTP 代理（7890）而非 SOCKS（7891）**：Python 标准库原生支持带 BASIC 认证的
+  HTTP 代理，`socks5://` 还需额外安装 PySocks。
+- 密码里的 `@ : / #` 等字符要做 **URL 编码**（如 `@` → `%40`），否则会被误解析。
+- 不设该变量则直连 —— 适合本来就已代理的机器。
 
 `.env` 与 `data/` 已在 `.gitignore` 中，不会误提交。
 

@@ -7,6 +7,9 @@ services:
       # 在宿主目录建 .env，写入 GIT_TOKEN=ghp_xxx（不要提交进仓库）
       GIT_TOKEN: ${GIT_TOKEN:?请在同目录 .env 中设置 GIT_TOKEN}
       GIT_REMOTE: ${GIT_REMOTE:-github.com/douxt/iptv-english.git}
+      # 网关 OpenClash 的 HTTP 代理（需 BASIC 认证），例：
+      # IPTV_PROXY=http://user:pass@192.168.31.1:7890
+      IPTV_PROXY: ${IPTV_PROXY:-}
       INTERVAL: ${INTERVAL:-86400}
       TZ: ${TZ:-Asia/Shanghai}
     volumes:

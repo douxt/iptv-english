@@ -111,8 +111,15 @@ FAMILIES = [
 
 def fetch(url):
     req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=40) as r:
-        return r.read().decode("utf-8", "replace")
+    try:
+        with opener().open(req, timeout=40) as r:
+            return r.read().decode("utf-8", "replace")
+    except Exception as e:
+        raise SystemExit(
+            f"拉取 {url} 失败：{e}\n"
+            f"如需走代理，设置环境变量：\n"
+            f"  IPTV_PROXY=http://用户名:密码@192.168.31.1:7890\n"
+            f"（密码中的 @ : / 等特殊字符需做 URL 编码）")
 
 
 def parse(text):
@@ -128,9 +135,33 @@ def parse(text):
     return out
 
 
+_OPENER = None
+
+
+def opener():
+    """统一出口。
+
+    设置环境变量 IPTV_PROXY 后，所有请求（含探活、geo 查询）都走该代理，
+    例：IPTV_PROXY=http://user:pass@192.168.31.1:7890
+    只支持 HTTP 代理 —— Python 标准库原生处理 BASIC 认证；
+    socks5:// 需要额外安装 PySocks，故不采用。
+    """
+    global _OPENER
+    if _OPENER is None:
+        p = os.environ.get("IPTV_PROXY", "").strip()
+        if p:
+            _OPENER = urllib.request.build_opener(
+                urllib.request.ProxyHandler({"http": p, "https": p}))
+            shown = re.sub(r"://[^@]*@", "://***@", p)
+            print(f"  [proxy] 全部请求经 {shown}")
+        else:
+            _OPENER = urllib.request.build_opener()
+    return _OPENER
+
+
 def _get(url, timeout=TIMEOUT):
     req = urllib.request.Request(url, headers={"User-Agent": UA}, method="GET")
-    with urllib.request.urlopen(req, timeout=timeout) as r:
+    with opener().open(req, timeout=timeout) as r:
         return r.read()
 
 
@@ -208,7 +239,7 @@ def cn_hosts(urls):
             req = urllib.request.Request(
                 GEO_API, data=json.dumps(ips[i:i + 100]).encode(),
                 headers={"Content-Type": "application/json"})
-            with urllib.request.urlopen(req, timeout=30) as r:
+            with opener().open(req, timeout=30) as r:
                 for item in json.load(r):
                     geo[item.get("query")] = item.get("countryCode")
         return {h for h, lst in resolved.items()
