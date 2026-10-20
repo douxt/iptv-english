@@ -3,6 +3,11 @@
 set -eu
 cd "$(dirname "$0")"
 
+# DSM 任务计划不接管输出，自己落日志
+LOG=/volume1/appdata/iptv-refresh/refresh.log
+mkdir -p "$(dirname "$LOG")"
+exec >> "$LOG" 2>&1
+
 if [ -f .env ]; then
   set -a
   . ./.env
