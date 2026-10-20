@@ -136,27 +136,19 @@ def parse(text):
 
 
 _OPENER = None
-_DIRECT = None
-
-# 走直连的主机集合（其余走代理）。目的是让探活路径与播放端一致：
-# 播放端的大陆站走 DIRECT、境外站走 PROXY，脚本也照此分流。
-CN_HOSTS = set()
-
-
-def direct_opener():
-    global _DIRECT
-    if _DIRECT is None:
-        _DIRECT = urllib.request.build_opener(urllib.request.ProxyHandler({}))
-    return _DIRECT
 
 
 def opener():
     """统一出口。
 
-    设置环境变量 IPTV_PROXY 后，请求走该代理，
-    例：IPTV_PROXY=http://user:pass@192.168.31.1:7890
-    只支持 HTTP 代理 —— Python 标准库原生处理 BASIC 认证；
-    socks5:// 需要额外安装 PySocks，故不采用。
+    设置 IPTV_PROXY 后，所有请求都交给该代理，例：
+        IPTV_PROXY=http://user:pass@192.168.31.1:7890
+
+    这里不做任何直连/代理的手工分流 —— Clash 的 HTTP 端口本身就是完整
+    规则引擎，会按 GEOIP,CN,DIRECT + MATCH,PROXY 自行分流，
+    与电视端走路由透明代理时的判定完全一致。脚本再分一次纯属重复。
+
+    只支持 HTTP 代理：Python 标准库原生处理 BASIC 认证；socks5:// 需装 PySocks。
     """
     global _OPENER
     if _OPENER is None:
@@ -164,8 +156,7 @@ def opener():
         if p:
             _OPENER = urllib.request.build_opener(
                 urllib.request.ProxyHandler({"http": p, "https": p}))
-            shown = re.sub(r"://[^@]*@", "://***@", p)
-            print(f"  [proxy] 境外请求经 {shown}（大陆主机直连）")
+            print(f"  [proxy] 请求经 {re.sub(r'://[^@]*@', '://***@', p)}（由 Clash 分流）")
         else:
             _OPENER = urllib.request.build_opener()
     return _OPENER
@@ -173,8 +164,7 @@ def opener():
 
 def _get(url, timeout=TIMEOUT):
     req = urllib.request.Request(url, headers={"User-Agent": UA}, method="GET")
-    use_direct = bool(os.environ.get("IPTV_PROXY")) and host_of(url) in CN_HOSTS
-    with (direct_opener() if use_direct else opener()).open(req, timeout=timeout) as r:
+    with opener().open(req, timeout=timeout) as r:
         return r.read()
 
 
@@ -303,17 +293,6 @@ def run_lang(cfg, do_probe):
     cands = [x for x in clean if brand.search(x[1])] if brand else clean
     print(f"  候选 {len(cands)}")
 
-    # 先定分流：大陆主机直连、其余走代理。必须在探活之前，
-    # 否则大陆源会被代理节点判死（与播放端的实际路径不符）。
-    cn = None
-    if cfg.get("direct") or os.environ.get("IPTV_PROXY"):
-        print("  解析主机归属...")
-        cn = cn_hosts([u for _, _, u in clean])
-        if cn:
-            CN_HOSTS.update(cn)
-            print(f"  大陆主机 {len(cn)} 个" +
-                  (" → 直连，其余 → 代理" if os.environ.get("IPTV_PROXY") else ""))
-
     if do_probe:
         print(f"  探活 {len(cands)}（并发 {WORKERS}，含分片验证）...")
         urls = [u for _, _, u in cands]
@@ -326,6 +305,9 @@ def run_lang(cfg, do_probe):
         print(f"  探活通过 {sum(1 for ok, _ in status.values() if ok)}/{len(cands)}  失败明细 {bad}")
     else:
         status = {u: (True, "") for _, _, u in cands}
+
+    # 大陆源站归属：仅供 direct 子列表使用（代理分流由 Clash 负责，不需在此处理）
+    cn = cn_hosts([u for _, _, u in clean]) if cfg.get("direct") else None
 
     t1, t2, t3 = cfg["tiers"]
     scored, exempted = [], 0
