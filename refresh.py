@@ -136,12 +136,24 @@ def parse(text):
 
 
 _OPENER = None
+_DIRECT = None
+
+# 走直连的主机集合（其余走代理）。目的是让探活路径与播放端一致：
+# 播放端的大陆站走 DIRECT、境外站走 PROXY，脚本也照此分流。
+CN_HOSTS = set()
+
+
+def direct_opener():
+    global _DIRECT
+    if _DIRECT is None:
+        _DIRECT = urllib.request.build_opener(urllib.request.ProxyHandler({}))
+    return _DIRECT
 
 
 def opener():
     """统一出口。
 
-    设置环境变量 IPTV_PROXY 后，所有请求（含探活、geo 查询）都走该代理，
+    设置环境变量 IPTV_PROXY 后，请求走该代理，
     例：IPTV_PROXY=http://user:pass@192.168.31.1:7890
     只支持 HTTP 代理 —— Python 标准库原生处理 BASIC 认证；
     socks5:// 需要额外安装 PySocks，故不采用。
@@ -153,7 +165,7 @@ def opener():
             _OPENER = urllib.request.build_opener(
                 urllib.request.ProxyHandler({"http": p, "https": p}))
             shown = re.sub(r"://[^@]*@", "://***@", p)
-            print(f"  [proxy] 全部请求经 {shown}")
+            print(f"  [proxy] 境外请求经 {shown}（大陆主机直连）")
         else:
             _OPENER = urllib.request.build_opener()
     return _OPENER
@@ -161,7 +173,8 @@ def opener():
 
 def _get(url, timeout=TIMEOUT):
     req = urllib.request.Request(url, headers={"User-Agent": UA}, method="GET")
-    with opener().open(req, timeout=timeout) as r:
+    use_direct = bool(os.environ.get("IPTV_PROXY")) and host_of(url) in CN_HOSTS
+    with (direct_opener() if use_direct else opener()).open(req, timeout=timeout) as r:
         return r.read()
 
 
@@ -290,6 +303,17 @@ def run_lang(cfg, do_probe):
     cands = [x for x in clean if brand.search(x[1])] if brand else clean
     print(f"  候选 {len(cands)}")
 
+    # 先定分流：大陆主机直连、其余走代理。必须在探活之前，
+    # 否则大陆源会被代理节点判死（与播放端的实际路径不符）。
+    cn = None
+    if cfg.get("direct") or os.environ.get("IPTV_PROXY"):
+        print("  解析主机归属...")
+        cn = cn_hosts([u for _, _, u in clean])
+        if cn:
+            CN_HOSTS.update(cn)
+            print(f"  大陆主机 {len(cn)} 个" +
+                  (" → 直连，其余 → 代理" if os.environ.get("IPTV_PROXY") else ""))
+
     if do_probe:
         print(f"  探活 {len(cands)}（并发 {WORKERS}，含分片验证）...")
         urls = [u for _, _, u in cands]
@@ -302,9 +326,6 @@ def run_lang(cfg, do_probe):
         print(f"  探活通过 {sum(1 for ok, _ in status.values() if ok)}/{len(cands)}  失败明细 {bad}")
     else:
         status = {u: (True, "") for _, _, u in cands}
-
-    # 大陆源站的豁免名单：探测点（CI 在美国）无权判定大陆源站死活
-    cn = cn_hosts([u for _, _, u in clean]) if cfg.get("direct") else None
 
     t1, t2, t3 = cfg["tiers"]
     scored, exempted = [], 0
