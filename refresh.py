@@ -30,6 +30,10 @@ UA = "VLC/3.0.20 LibVLC/3.0.20"
 TIMEOUT = 10
 WORKERS = 24
 
+# 探活点与播放端不同路时置 True（例如在境外 CI 上跑）：
+# 此时大陆源站「连不上」应视为探测点问题，而非源已死。
+REMOTE_PROBE = False
+
 # 命中任一分组即剔除（group-title 可能是 "Kids;Religious" 这种多标签）
 DROP_GROUPS = ["Religious", "Legislative", "Undefined", "Shopping", "Shop"]
 
@@ -275,10 +279,11 @@ def run_lang(cfg, do_probe):
     scored, exempted = [], 0
     for ext, ch, url in cands:
         ok, reason = status.get(url, (False, "missing"))
-        # 远端探活无权否决大陆源站：网络不可达 / 分片拉不动，在探测点之外
-        # 并不代表源已死（CI 跑在美国，大陆源多只对国内可达）
-        if not ok and cn and host_of(url) in cn and (
-                reason == "unreachable" or reason.startswith(("seg", "http5"))):
+        # 仅当探活点与播放端不同路时（如云端 CI）才豁免大陆源站：
+        # 那种情况下「连不上」不代表源死了，只代表探测点在国内之外。
+        # 在 NAS / 网关本地跑时不豁免 —— 那时探活结果就是用户真实可达性。
+        if (REMOTE_PROBE and not ok and cn and host_of(url) in cn
+                and (reason == "unreachable" or reason.startswith(("seg", "http5")))):
             ok, exempted = True, exempted + 1
         if not ok:
             continue
@@ -384,7 +389,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--no-probe", action="store_true", help="跳过探活")
     ap.add_argument("--lang", help="只跑指定语言（english / chinese）")
+    ap.add_argument("--assume-remote-probe", action="store_true",
+                    help="探活点与播放端不同路（如境外 CI）：大陆源站连不上时不判死")
     args = ap.parse_args()
+
+    global REMOTE_PROBE
+    REMOTE_PROBE = args.assume_remote_probe
 
     results = []
     for cfg in LANGS:
