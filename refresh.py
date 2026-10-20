@@ -162,10 +162,16 @@ def opener():
     return _OPENER
 
 
-def _get(url, timeout=TIMEOUT):
+def _get(url, timeout=TIMEOUT, limit=None):
+    """limit 给定时最多读这么多字节。
+
+    分片校验必须设上限：不限量时，慢速流只要间隙小于 timeout 就会一直有
+    数据进来，read() 永不返回，线程被永久占住（实测 452 个卡在最后 2 个）。
+    校验只需要确认「能吐出数据」，64KB 足够。
+    """
     req = urllib.request.Request(url, headers={"User-Agent": UA}, method="GET")
     with opener().open(req, timeout=timeout) as r:
-        return r.read()
+        return r.read() if limit is None else r.read(limit)
 
 
 def probe(url):
@@ -178,7 +184,7 @@ def probe(url):
     返回 (是否健康, 失败原因)。
     """
     try:
-        body = _get(url).decode("utf-8", "replace")
+        body = _get(url, limit=262144).decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
         return False, f"http{e.code}"
     except Exception:
@@ -197,7 +203,7 @@ def probe(url):
             return False, "empty-master"
         vurl = urljoin(base, lines[0])
         try:
-            body = _get(vurl).decode("utf-8", "replace")
+            body = _get(vurl, limit=262144).decode("utf-8", "replace")
         except urllib.error.HTTPError as e:
             return False, f"variant{e.code}"
         except Exception:
@@ -209,7 +215,7 @@ def probe(url):
         return False, "no-segment"
     seg = urljoin(base, lines[0])
     try:
-        if not _get(seg):
+        if not _get(seg, limit=65536):
             return False, "empty-segment"
     except urllib.error.HTTPError as e:
         return False, f"seg{e.code}"
@@ -296,8 +302,14 @@ def run_lang(cfg, do_probe):
     if do_probe:
         print(f"  探活 {len(cands)}（并发 {WORKERS}，含分片验证）...")
         urls = [u for _, _, u in cands]
+        status, done = {}, 0
         with cf.ThreadPoolExecutor(max_workers=WORKERS) as ex:
-            status = dict(zip(urls, ex.map(probe, urls)))
+            futs = {ex.submit(probe, u): u for u in urls}
+            for fut in cf.as_completed(futs):
+                status[futs[fut]] = fut.result()
+                done += 1
+                if done % 50 == 0:
+                    print(f"    进度 {done}/{len(urls)}")
         bad = {}
         for ok, reason in status.values():
             if not ok:

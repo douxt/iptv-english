@@ -16,6 +16,9 @@ export PYTHONUNBUFFERED=1   # 日志重定向到文件时也要实时输出
 echo "[$(date -Iseconds)] 开始"
 python3 refresh.py
 
+git config user.name  "iptv-refresh"
+git config user.email "iptv-refresh@nas.local"
+
 # 让 git 也走代理，并把令牌写进远端地址（仓库级配置，不污染全局）
 git config http.proxy  "$IPTV_PROXY"
 git config https.proxy "$IPTV_PROXY"
