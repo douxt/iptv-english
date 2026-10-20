@@ -28,7 +28,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BASE_URL = "https://iptv-org.github.io/iptv/languages/{}.m3u"
 UA = "VLC/3.0.20 LibVLC/3.0.20"
 TIMEOUT = 10
-WORKERS = 24
+WORKERS = int(os.environ.get("IPTV_WORKERS", "24"))   # 代理链路带宽/连接数紧张时调小
 
 # 探活点与播放端不同路时置 True（例如在境外 CI 上跑）：
 # 此时大陆源站「连不上」应视为探测点问题，而非源已死。

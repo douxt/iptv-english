@@ -12,6 +12,7 @@ fi
 : "${IPTV_PROXY:?在 $(pwd)/.env 里设置 IPTV_PROXY}"
 : "${GIT_TOKEN:?在 $(pwd)/.env 里设置 GIT_TOKEN}"
 
+export PYTHONUNBUFFERED=1   # 日志重定向到文件时也要实时输出
 echo "[$(date -Iseconds)] 开始"
 python3 refresh.py
 
