@@ -9,6 +9,13 @@ INTERVAL="${INTERVAL:-86400}"
 export IPTV_PROXY="${IPTV_PROXY:-}"
 REPO=/data/repo
 
+# git 不认 IPTV_PROXY，得单独配；否则在无透明代理的机器上 clone/push 会卡死
+if [ -n "$IPTV_PROXY" ]; then
+  echo "[init] git 走代理"
+  git config --global http.proxy  "$IPTV_PROXY"
+  git config --global https.proxy "$IPTV_PROXY"
+fi
+
 if [ ! -d "$REPO/.git" ]; then
   echo "[init] clone $GIT_REMOTE"
   git clone "https://x-access-token:${GIT_TOKEN}@${GIT_REMOTE}" "$REPO"
