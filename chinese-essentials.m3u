@@ -1,6 +1,8 @@
-#EXTM3U x-tvg-url="https://epg.kanya.io/us/guide.xml.gz"
+#EXTM3U
 #EXTINF:-1 tvg-id="BabyFirst.us@US" tvg-logo="https://i.imgur.com/WxLHBwu.png" group-title="Kids",BabyFirst (720p)
 https://cdn.fast.jwp.services/v1/channel/1_jB6940Ei_TvhvIHDL/manifest.m3u8
+#EXTINF:-1 tvg-id="CCTV1.cn@SD" tvg-logo="https://i.imgur.com/TpA3cUl.png" group-title="General",CCTV-1 (720p)
+http://74.91.26.218:82/live/cctv1hd.m3u8
 #EXTINF:-1 tvg-id="CCTV12.cn@SD" tvg-logo="https://i.imgur.com/3yTuiOM.png" group-title="Lifestyle",CCTV-12 (720p)
 http://74.91.26.218:82/live/cctv12hd.m3u8
 #EXTINF:-1 tvg-id="CCTV3.cn@SD" tvg-logo="https://i.imgur.com/iFlkIuw.png" group-title="Entertainment",CCTV-3 (720p)
@@ -27,8 +29,6 @@ https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8
 https://stream.sun0769.com/dgrtv1/mp4tv1_800/index.m3u8
 #EXTINF:-1 tvg-id="DragonTVInternational.cn@SD" tvg-logo="https://i.imgur.com/WqM6xnF.png" group-title="General",Dragon TV International
 https://restream.pdtvhd.com/memfs/0b1b95c9-3543-4af9-9fdb-cf45f1602f17.m3u8
-#EXTINF:-1 tvg-id="EBCForeignMovie.tw@SD" tvg-logo="https://i.imgur.com/oUhYdea.png" group-title="Movies",EBC Foreign Movie
-http://111.59.139.85:11888/tsfile/live/1217_1.m3u8?key=txiptv
 #EXTINF:-1 tvg-id="GuangdongTVAmerica.us@SD" tvg-logo="https://i.imgur.com/7J4qGjA.png" group-title="General",Guangdong TV America
 https://h5cul1yar48um3t.wcetv.com/hls/gdtv.m3u8
 #EXTINF:-1 tvg-id="GuangxiVarietyTravelChannel.cn@SD" tvg-logo="https://www.tvchinese.net/uploads/tv/gxzypd.jpg" group-title="General;Travel",Guangxi Variety & Travel Channel
