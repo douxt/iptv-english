@@ -409,9 +409,11 @@ http://23.239.31.26:8989/animalplanet/index.m3u8
 https://pb-ioe9d0fpkd6pp.akamaized.net/playlist.m3u8
 #EXTINF:-1 tvg-id="AnimaxAsia.sg@India" tvg-logo="https://jiotvimages.cdn.jio.com/dare_images/images/Animax.png" group-title="Animation",Animax Asia India (1080p) [Geo-blocked]
 https://amg02159-kcglobal-amg02159c1-samsung-in-521.playouts.now.amagi.tv/playlist/amg02159-kcglobal-animax-samsungin/playlist.m3u8
+#EXTINF:-1 tvg-id="AnimaxAsia.sg@Taiwan" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Animax.png/960px-Animax.png" group-title="Animation",Animax Asia Taiwan
+http://125.227.210.55:3056/VideoInput/play.ts
 #EXTINF:-1 tvg-id="AnimexHIDIVE.us@SD" tvg-logo="https://i.imgur.com/v0BlxCa.png" group-title="Animation",Anime x HIDIVE
 https://jmp2.uk/plu-6793eaa4bc03978b9bc63db1.m3u8
-#EXTINF:-1 tvg-id="AniplusAsia.sg@SD" tvg-logo="https://i.imgur.com/Im3MePy.png" group-title="Animation",Aniplus Asia (720p)
+#EXTINF:-1 tvg-id="AniplusAsia.sg@SD" tvg-logo="https://i.imgur.com/Im3MePy.png" group-title="Animation",Aniplus Asia (720p) [Geo-blocked]
 https://amg18481-amg18481c1-amgplt0352.playout.now3.amagi.tv/playlist/amg18481-amg18481c1-amgplt0352/playlist.m3u8
 #EXTINF:-1 tvg-id="AnthonyBourdainPartsUnknown.us@UK" tvg-logo="https://i.imgur.com/dAO9llk.png" group-title="Series",Anthony Bourdain: Parts Unknown
 https://jmp2.uk/plu-69173ce8abd4703b27f71d44.m3u8
@@ -1021,7 +1023,7 @@ https://jmp2.uk/plu-66a7ab4dcd0d3100084395b4.m3u8
 https://jmp2.uk/plu-66a7aa44cd0d31000843942b.m3u8
 #EXTINF:-1 tvg-id="CarolineintheCity.se@NO" tvg-logo="https://images.pluto.tv/channels/66a7aa44cd0d31000843942b/colorLogoPNG.png" group-title="Comedy",Caroline in the City NO
 https://jmp2.uk/plu-66a7aac9d512590008ab2dcb.m3u8
-#EXTINF:-1 tvg-id="CartoonClassics.pl@FAST" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork/3227c06e-333b-4b1b-b657-3e3ab99ebd06-width200-quality90.jpeg" group-title="Animation;Kids",Cartoon Classics
+#EXTINF:-1 tvg-id="CartoonClassics.pl@FAST" tvg-logo="https://images-3.rakuten.tv/storage/global-live-channel/translation/artwork/3227c06e-333b-4b1b-b657-3e3ab99ebd06-width200-quality90.jpeg" group-title="Animation;Kids",Cartoon Classics (Poland)
 https://daiconnect.com/live/hls/tvup/rk-cartoonclassics/578f4b7eb725168349ec0af81b21d388/index.m3u8
 #EXTINF:-1 tvg-id="CartoonNetwork.pk@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/80/Cartoon_Network_2010_logo.svg/960px-Cartoon_Network_2010_logo.svg.png" group-title="Animation;Kids",Cartoon Network (Pakistan)
 https://vodzong.mjunoon.tv:8087/streamtest/cartoon-network-87/live/87H/chunks.m3u8
@@ -1486,7 +1488,7 @@ http://23.237.104.106:8080/USA_CRIME_INVESTIGATION/index.m3u8
 #EXTINF:-1 tvg-id="CrimePlusInvestigationAsia.sg@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/4/4d/Crime_%2B_Investigation_Logo_10.2019.svg" group-title="Entertainment",Crime + Investigation Asia (720p) [Geo-blocked]
 https://cdn09jtedge.indihometv.com/joss/133/crimeinvestigation/index.m3u8
 #EXTINF:-1 tvg-id="CrimePlusInvestigationCEE.uk@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/4/4d/Crime_%2B_Investigation_Logo_10.2019.svg" group-title="Entertainment",Crime + Investigation CEE
-http://88.212.15.17/live/test_cai_hevc/playlist.m3u8
+http://88.212.7.14/live/test_cai_hevc/playlist.m3u8
 #EXTINF:-1 tvg-id="CrimeandEvidence.za@SD" tvg-logo="https://i.imgur.com/xwGquEb.png" group-title="Undefined",Crime and Evidence (720p)
 https://afxporigin.telemedia.co.za/afxp/abr_crimeandevidence/playlist.m3u8
 #EXTINF:-1 tvg-id="CrimenesImperfectos.us@SD" tvg-logo="https://i.imgur.com/kzUrWR5.png" group-title="Undefined",Crimenes Imperfectos
@@ -1667,8 +1669,6 @@ https://jmp2.uk/plu-668bf7dd74f5ec000817e6d1.m3u8
 https://jmp2.uk/plu-668bf91208d5490008065ffd.m3u8
 #EXTINF:-1 tvg-id="DijlahTV.iq@SD" tvg-logo="https://i.imgur.com/kyzH3G5.png" group-title="News",Dijlah TV (1080p)
 https://ghaasiflu.online/Dijlah/index.m3u8
-#EXTINF:-1 tvg-id="DiscoMix.ro@SD" tvg-logo="https://www.discomix.ro/wp-content/uploads/2023/03/Disco-Mix-1.png" group-title="Music",Disco Mix (576p)
-http://rpprod.hbbtv.cdn.cra.cz:8080/hbbTV/cme-ro-disco-mix/live_hq?offsetSeconds=0
 #EXTINF:-1 tvg-id="DiscoveringChina.cn@SD" tvg-logo="https://i.imgur.com/wr2bLaA.png" group-title="Culture;Documentary",Discovering China (1080p)
 https://fastlive.cctvplus.com/out/v1/8442c3bfd4c64a3984389328f6087879/index.m3u8
 #EXTINF:-1 tvg-id="DiscoveryAsiaTaiwan.tw@SD" tvg-logo="https://i.imgur.com/foLICwL.png" group-title="Entertainment",Discovery Asia Taiwan (1080p)
@@ -1701,6 +1701,8 @@ http://103.151.60.162:2122/play/a016/index.m3u8?hls
 #EXTVLCOPT:http-referrer=https://cool-tv.net/
 #EXTINF:-1 tvg-id="DisneyJunior.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/2024_Disney_Jr._Logo.svg/960px-2024_Disney_Jr._Logo.svg.png" group-title="Kids",Disney Junior (United States) (480p)
 http://tvsen5.aynascope.net/disney/index.m3u8
+#EXTINF:-1 tvg-id="DisneyXD.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/2015_Disney_XD_logo.svg/960px-2015_Disney_XD_logo.svg.png" group-title="Kids",Disney XD (United States) (1080p)
+http://89.187.179.148:826/1368/gXwiagaXda/1672
 #EXTINF:-1 tvg-id="DistrictofColumbiaNetwork.us@SD" tvg-logo="https://i.imgur.com/GGZ8BQ8.png" group-title="Legislative",District of Columbia Network (1080p)
 https://video.oct.dc.gov/out/u/DCN.m3u8
 #EXTINF:-1 tvg-id="DistritoComedia.mx@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/DistritoComediaLOGO2018.png/960px-DistritoComediaLOGO2018.png" group-title="Comedy",Distrito Comedia (1080p)
@@ -2552,7 +2554,7 @@ https://amg00861-amg00861c6-stirr-us-8229.playouts.now.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="Investiga.us@US" tvg-logo="https://images.pluto.tv/channels/5cf96b8f4f1ca3f0629f4bf1/colorLogoPNG.png" group-title="Series",Investiga US
 https://jmp2.uk/plu-5cf96b8f4f1ca3f0629f4bf1.m3u8
 #EXTINF:-1 tvg-id="InvestigationDiscovery.hu@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="Documentary",Investigation Discovery (Hungary)
-http://88.212.15.17/live/id_hun/index.m3u8
+http://88.212.7.14/live/id_hun/index.m3u8
 #EXTINF:-1 tvg-id="InvestigationDiscovery.in@SD" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_INVESTIGATION_DISCOVERY/images/LOGO_HD/image.png" group-title="Documentary",Investigation Discovery (India) (720p)
 https://drk6xq0vhn.gpcdn.net/live/id_hd_abr/index.m3u8
 #EXTINF:-1 tvg-id="InvestigationDiscovery.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/InvestigationDiscoveryLogo2020.svg/960px-InvestigationDiscoveryLogo2020.svg.png" group-title="Documentary",Investigation Discovery (United States) (1080p) [Geo-blocked]
@@ -3074,7 +3076,7 @@ https://rnttwmjcin.turknet.ercdn.net/lcpmvefbyo/minikago/minikago.m3u8
 #EXTINF:-1 tvg-id="Minimax.ro@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/en/b/ba/Minimax_2021.svg" http-referrer="https://cool-tv.net/" group-title="Animation;Kids",Minimax (Romania)
 #EXTVLCOPT:http-referrer=https://cool-tv.net/
 #EXTINF:-1 tvg-id="MinimaxCEE.cz@SD" tvg-logo="https://i.imgur.com/WWOlm1x.png" group-title="Kids",Minimax CEE (576p)
-http://88.212.15.17/live/test_minimax/playlist.m3u8
+http://88.212.15.50/live/test_minimax/playlist.m3u8
 #EXTINF:-1 tvg-id="MiracleTV.uk@SD" tvg-logo="https://i.imgur.com/pTn8Vc3.png" group-title="Religious",Miracle TV (480p)
 https://viewmedia7219.bozztv.com/wmedia/viewmedia100/web_030/Stream/playlist.m3u8
 #EXTINF:-1 tvg-id="MirrorNow.in@SD" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_MIRROR_NOW/images/LOGO_HD/image.png" http-referrer="https://www.timesnownews.com/" group-title="News",Mirror Now (720p)
@@ -3300,15 +3302,15 @@ https://jmp2.uk/plu-61c1d56f28e94c0007827bdb.m3u8
 #EXTINF:-1 tvg-id="Munnaaru.mv@SD" tvg-logo="https://i.imgur.com/Adhr5xq.png" group-title="Religious",Munnaaru
 https://customer-ujex1meek7koqd9x.cloudflarestream.com/6a46f90ca384c7419efdbef3ff1892a9/manifest/video.m3u8
 #EXTINF:-1 tvg-id="MusicBoxClassic.cz@SD" tvg-logo="https://musicboxclassic.com/music_box_classic_logo.png" group-title="Music",Music Box Classic
-http://88.212.15.17/live/mb_classic/index.m3u8
+http://88.212.15.50/live/mb_classic/index.m3u8
 #EXTINF:-1 tvg-id="MusicBoxDance.cz@SD" tvg-logo="https://musicboxdance.com/music_box_dance_logo.png" group-title="Music",Music Box Dance
-http://88.212.15.17/live/mb_dance/index.m3u8
+http://88.212.15.50/live/mb_dance/index.m3u8
 #EXTINF:-1 tvg-id="MusicBoxHits.cz@SD" tvg-logo="https://musicboxhits.com/music_box_hits_logo.png" group-title="Music",Music Box Hits
-http://88.212.15.17/live/mb_hits/index.m3u8
+http://88.212.15.50/live/mb_hits/index.m3u8
 #EXTINF:-1 tvg-id="MusicBoxPolska.pl@Ukraine" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Music_Box_UA_%282018%29.svg/960px-Music_Box_UA_%282018%29.svg.png" http-referrer="http://live.tvstitch.com/" http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36" group-title="Music",Music Box Polska Ukraine
 #EXTVLCOPT:http-referrer=http://live.tvstitch.com/
 #EXTINF:-1 tvg-id="MusicBoxSexy.cz@SD" tvg-logo="https://musicboxsexy.com/music_box_sexy_logo.png" group-title="Music",Music Box Sexy
-http://88.212.15.17/live/mb_sexy/index.m3u8
+http://88.212.15.50/live/mb_sexy/index.m3u8
 #EXTINF:-1 tvg-id="MuslimNetworkTV.us@SD" tvg-logo="" group-title="Religious",Muslim Network TV
 https://afghantv.app/hls2/muslimnetwork/index.m3u8
 #EXTINF:-1 tvg-id="MUTV.uk@SD" tvg-logo="https://d2n0069hmnqmmx.cloudfront.net/epgdata/1.0/newchanlogos/512/512/skychb1834.png" group-title="Sports",MUTV (720p)
@@ -4358,7 +4360,7 @@ https://stream.weathernationtv.com/RAVStirr_poekxujeisurekugzezyg/O1/playlistSCT
 #EXTINF:-1 tvg-id="RealAmericasVoice.us@KPVMLD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Logo_Real_America%27s_Voice.svg/960px-Logo_Real_America%27s_Voice.svg.png" group-title="Undefined",Real America's Voice KPVM-LD
 https://2-fss-2.streamhoster.com/pl_118/206858-4404454-1/playlist.m3u8
 #EXTINF:-1 tvg-id="RealMadridTVEnglish.es@SD" tvg-logo="https://i.imgur.com/5pMo7dL.png" group-title="Sports",Real Madrid TV English
-http://88.212.15.17/live/real_madrid_tv/index.m3u8
+http://88.212.15.50/live/real_madrid_tv/index.m3u8
 #EXTINF:-1 tvg-id="RealWild.uk@SD" tvg-logo="https://i.imgur.com/T9HHmAO.png" group-title="Undefined",Real Wild (1080p)
 https://lds-realwild-samsungau.amagi.tv/playlist.m3u8
 #EXTINF:-1 tvg-id="RedApple21.us@SD" tvg-logo="https://i.imgur.com/ICcQUCH.png" group-title="Education",Red Apple 21 (480p) [Not 24/7]
@@ -5326,7 +5328,7 @@ https://cdn-shop-lc-01.akamaized.net/Content/HLS_HLS/Live/channel(TJCOTT)/index.
 #EXTINF:-1 tvg-id="TjilTV.na@SD" tvg-logo="https://i.imgur.com/iBbawJ0.png" group-title="Music",Tjil TV (720p)
 https://hls-1zdhtxpm-livepush.akamaized.net/live_cdn/nsM12Xw0C1xXdJ/em0Wx71z-ec6EWJb/rewind-3600.m3u8
 #EXTINF:-1 tvg-id="TLC.hu@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/TLC_Logo.svg/960px-TLC_Logo.svg.png" group-title="Lifestyle",TLC (Hungary)
-http://88.212.15.17/live/tlc_hungary/index.m3u8
+http://88.212.7.14/live/tlc_hungary/index.m3u8
 #EXTINF:-1 tvg-id="TLC.in@SD" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_TLC/images/LOGO_HD/image.png" group-title="Lifestyle",TLC (India) (720p)
 https://drk6xq0vhn.gpcdn.net/live/tlc_sd_abr/index.m3u8
 #EXTINF:-1 tvg-id="TLC.in@HD" tvg-logo="https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_TLC/images/LOGO_HD/image.png" group-title="Lifestyle",TLC (India) HD (720p)
