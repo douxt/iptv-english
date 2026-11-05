@@ -17,6 +17,10 @@ https://php.jdshipin.com/TVOD/iptv.php?id=cctv5p
 https://xykt-fix.github.io/Y77.m3u8
 #EXTINF:-1 tvg-id="CGTN.cn@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/CGTN.svg/960px-CGTN.svg.png" group-title="News",CGTN (1080p)
 https://amg00405-rakutentv-cgtn-rakuten-i9tar.amagi.tv/master.m3u8
+#EXTINF:-1 tvg-id="Channel8.sg@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Mediacorp_Channel_8_2023.svg/960px-Mediacorp_Channel_8_2023.svg.png" group-title="General",Channel 8 (Singapore) (720p)
+https://cdn.qd.je/163189/ch8
+#EXTINF:-1 tvg-id="ChannelU.sg@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Mediacorp_Channel_U_2023.svg/960px-Mediacorp_Channel_U_2023.svg.png" group-title="Entertainment",Channel U (720p)
+https://cdn.qd.je/163189/chu
 #EXTINF:-1 tvg-id="ChaozhouPublicChannel.cn@SD" tvg-logo="https://i.imgur.com/8YIrgB7.png" group-title="General",Chaozhou Public Channel
 http://113.64.146.48:1688/hls/4/index.m3u8
 #EXTINF:-1 tvg-id="ChinaTravel.cn@SD" tvg-logo="https://i.imgur.com/vSgY3CD.png" group-title="Culture;Documentary;Travel",China Travel (1080p)
@@ -57,8 +61,6 @@ https://aegis-cloudfront-1.tubi.video/6d6d0f24-8445-4b4c-bdf6-44f9e38beaa4/playl
 http://video10.qtv.com.cn/drm/qtv1at/manifest.m3u8
 #EXTINF:-1 tvg-id="QTV2.cn@SD" tvg-logo="https://www.tvchinese.net/uploads/tv/qdtv2.jpg" group-title="Lifestyle",QTV-2
 http://video10.qtv.com.cn/drm/qtv2at/manifest.m3u8
-#EXTINF:-1 tvg-id="QTV3.cn@SD" tvg-logo="https://www.tvchinese.net/uploads/tv/qdtv3.jpg" group-title="Movies",QTV-3
-http://video10.qtv.com.cn/drm/qtv3at/manifest.m3u8
 #EXTINF:-1 tvg-id="QTV4.cn@SD" tvg-logo="https://www.tvchinese.net/uploads/tv/qdtv4.jpg" group-title="General",QTV-4
 http://video10.qtv.com.cn/drm/qtv4at/manifest.m3u8
 #EXTINF:-1 tvg-id="QTV5.cn@SD" tvg-logo="https://www.tvchinese.net/uploads/tv/qdtv5.jpg" group-title="General",QTV-5
