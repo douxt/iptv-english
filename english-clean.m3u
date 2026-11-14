@@ -3543,8 +3543,6 @@ https://reflect-stlucie-ps-fl.cablecast.tv/live-1/live/stream-1/WIFI-1896k-720p.
 https://wurl120sports.global.transmit.live/hls/679a907dce42a042c23ace37/v1/stadium_gracenote/samsung_us/latest/main/hls/playlist.m3u8
 #EXTINF:-1 tvg-id="StarChannel.bg@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Star_Channel_2020.svg/960px-Star_Channel_2020.svg.png" http-user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.3" group-title="Movies",Star Channel (Bulgaria)
 #EXTVLCOPT:http-user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.3
-#EXTINF:-1 tvg-id="StarSportsSelect2.in@HD" tvg-logo="https://i.imgur.com/FtRT73R.png" group-title="Sports",Star Sports Select 2 HD (720p)
-http://tvsen7.aynascope.net/ssport2hd/index.m3u8
 #EXTINF:-1 tvg-id="StarTrek.us@US" tvg-logo="https://images.pluto.tv/channels/5efbd39f8c4ce900075d7698/colorLogoPNG.png" group-title="Series",Star Trek US
 https://jmp2.uk/plu-5efbd39f8c4ce900075d7698.m3u8
 #EXTINF:-1 tvg-id="StarTrekMovies.se@SE" tvg-logo="https://images.pluto.tv/channels/6400c281dff38e00083f59da/colorLogoPNG.png" group-title="Movies",Star Trek Movies

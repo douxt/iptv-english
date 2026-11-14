@@ -39,8 +39,6 @@ http://go.bkpcp.top/mg/bjws
 http://74.91.26.218:82/live/cctv1hd.m3u8
 #EXTINF:-1 tvg-id="CCTV12.cn@SD" tvg-logo="https://i.imgur.com/3yTuiOM.png" group-title="CN·Lifestyle",CCTV-12 (720p)
 http://74.91.26.218:82/live/cctv12hd.m3u8
-#EXTINF:-1 tvg-id="CCTV3.cn@SD" tvg-logo="https://i.imgur.com/iFlkIuw.png" group-title="CN·Entertainment",CCTV-3 (720p)
-http://74.91.26.218:82/live/cctv3hd.m3u8
 #EXTINF:-1 tvg-id="CCTV4America.cn@SD" tvg-logo="https://i.imgur.com/gBbLyqh.png" group-title="CN·General",CCTV-4 America
 https://h5cul1yar48um3t.wcetv.com/hls/cctv4.m3u8
 #EXTINF:-1 tvg-id="CCTV4Europe.cn@SD" tvg-logo="https://i.imgur.com/HGLFdfk.png" group-title="CN·General",CCTV-4 Europe
@@ -117,8 +115,6 @@ https://n18syndication.akamaized.net/bpk-tv/CNBC_TV18_NW18_MOB/output01/index.m3
 https://tvsen6.aynaott.com/cnn/index.m3u8
 #EXTINF:-1 tvg-id="CNNInternational.us@Europe" tvg-logo="https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/CNN-International-Logo.svg/960px-CNN-International-Logo.svg.png" group-title="EN·News",CNN International (1080p)
 https://d3bp6dwmpbdajl.cloudfront.net/v1/master/3722c60a815c199d9c0ef36c5b73da68a62b09d1/cc-ury0meh5m4nzm/index.m3u8
-#EXTINF:-1 tvg-id="CNNNews18.in@SD" tvg-logo="https://dtil.tmsimg.com/assets/s142747_ld_h15_aa.png?lock=720x540" group-title="EN·News",CNN News 18 (1080p)
-https://n18syndication.akamaized.net/bpk-tv/CNN_News18_NW18_MOB/output01/master.m3u8
 #EXTINF:-1 tvg-id="CNNOriginals.us@SD" tvg-logo="https://provider-static.plex.tv/epg/cms/production/f351d697-1e1f-4e7d-86c7-5995698e593f/CNN_Originals_ChannelLogo_Dark_1500x1000_2025_-_Grace_Hartwig.png" group-title="EN·News",CNN Originals (1080p)
 https://amg01918-cnnus-amg01918c2-vizio-us-9192.playouts.now.amagi.tv/playlist/amg01918-cnnus-cnnoriginals-vizious/playlist.m3u8
 #EXTINF:-1 tvg-id="DiscoveryChannelLatinAmerica.us@Panregional" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/2019_Discovery_logo.svg/960px-2019_Discovery_logo.svg.png" group-title="EN·Entertainment",Discovery Channel Latin America (1080p)
@@ -141,6 +137,8 @@ http://85.237.89.160:9590/usa-s/ESPN-U-HD/index.m3u8
 https://dash4.antik.sk/live/test_euronews/playlist.m3u8
 #EXTINF:-1 tvg-id="Eurosport.in@HD" tvg-logo="https://dtil.tmsimg.com/assets/GNLZZGG002E9LQS.png?lock=720x540" group-title="EN·Sports",Eurosport (India) HD (1080p)
 https://livetv.shamon-cable.net:8443/Eurosport-HD/index.m3u8
+#EXTINF:-1 tvg-id="Eurosport1.fr@UK" tvg-logo="https://i.imgur.com/olQJgm7.png" group-title="EN·Sports",Eurosport 1 UK (1080p)
+http://85.117.37.43/eurosport1/index.m3u8
 #EXTINF:-1 tvg-id="FoxBusinessNetwork.us@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Fox_Business.svg/960px-Fox_Business.svg.png" group-title="EN·Business",Fox Business Network (576p)
 https://tvsen6.aynaott.com/foxbusiness/index.m3u8
 #EXTINF:-1 tvg-id="FoxNewsChannel.us@SD" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Fox_News_Channel_logo.svg/960px-Fox_News_Channel_logo.svg.png" group-title="EN·News",Fox News Channel (1080p)
@@ -225,5 +223,3 @@ https://mumbai-edge.smartplaytv.in/TRTWorld/index.m3u8
 https://rpn.bozztv.com/gusa/gusa-tvshollywoohistory/index.m3u8
 #EXTINF:-1 tvg-id="VH1.us@East" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/VH1_logonew.svg/960px-VH1_logonew.svg.png" group-title="EN·Music",VH1 (1080p)
 http://23.237.104.106:8080/USA_VH1/index.m3u8
-#EXTINF:-1 tvg-id="WWONTVChannel48.us@SD" tvg-logo="https://i.imgur.com/l4qHAq6.png" group-title="EN·Entertainment",WWON-TV Channel 48
-https://tv2.fastcast4u.com:3943/stream/play.m3u8
