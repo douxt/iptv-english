@@ -2,3 +2,6 @@
 data/
 __pycache__/
 *.pyc
+
+# 本地备份/临时
+refresh.py.bak-*
